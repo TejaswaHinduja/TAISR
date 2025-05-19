@@ -22,14 +22,14 @@ app.use(express.json());
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: MongoStore.create({  mongoUrl: process.env.MONGO_URL }),
     cookie: { 
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite:'none',
       httpOnly:true,
       maxAge: 1000 * 60 * 60 * 24, // 24 hours
-      domain: '.onrender.com'
+      
     },
     proxy: true
 }));
