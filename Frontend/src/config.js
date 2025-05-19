@@ -4,7 +4,7 @@
 const config = {
     // API endpoints
     API: {
-      BASE_URL: 'http://localhost:5000',
+      BASE_URL: import.meta.env.VITE_API_BASE_URL,
       ENDPOINTS: {
         TWITTER_AUTH: '/api/auth/twitter',
         TWITTER_CALLBACK: '/api/auth/twitter/callback',
