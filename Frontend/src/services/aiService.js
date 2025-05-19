@@ -2,8 +2,8 @@ import config from '../config';
 
 /**
  * Generate a tweet from user thought using Mistral AI
- * @param {string} userThought - The user's original thought
- * @returns {Promise<string>} The generated tweet text
+ * @param {string} userThought 
+ * @returns {Promise<string>} 
  */
 export const generateTweet = async (userThought) => {
   try {
@@ -31,12 +31,11 @@ export const generateTweet = async (userThought) => {
 
 /**
  * Set a custom Hugging Face API key
- * @param {string} apiKey - The API key to set
- * @returns {boolean} Success status
+ * @param {string} apiKey 
+ * @returns {boolean} 
  */
 export const setHuggingFaceApiKey = (apiKey) => {
-  // This would typically store the API key in localStorage or similar
-  // For now, just return true as if it succeeded
+  
   localStorage.setItem('custom_api_key', apiKey);
   return true;
 };

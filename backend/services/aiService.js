@@ -50,8 +50,12 @@ exports.enhanceTweet = async (content) => {
         }
       }
     );
+    let aiText=response.data.choices[0].message.content.trim();
+    if(aiText.toLowerCase().includes('or')){
+      aiText=aiText.split(/\s+or\s+/i)[0].trim();
+    }
+    return aiText;
     
-    return response.data.choices[0].message.content.trim();
   } catch (error) {
     console.error('Mistral API error:', error);
     throw new Error('Failed to enhance tweet with AI');
