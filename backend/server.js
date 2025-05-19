@@ -12,7 +12,7 @@ console.log('TWITTER_CLIENT_SECRET:', process.env.TWITTER_CLIENT_SECRET);
 const app=express();
 mongoose.connect(process.env.MONGO_URL).then(()=>console.log("Connected to MongoDB")).catch((err)=>console.log("Connection Fail",err));
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://taisr-frontend.vercel.app",
     credentials:true
 }));
 app.use(express.json());
@@ -21,9 +21,11 @@ app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+    store: MongoStore.create({  mongoUrl: process.env.MONGO_URL }),
     cookie: { 
       secure: process.env.NODE_ENV === 'production',
+      sameSite:'none',
+      httpOnly:true,
       maxAge: 1000 * 60 * 60 * 24 // 24 hours
     }
 }));
