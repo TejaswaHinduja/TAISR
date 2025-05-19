@@ -12,8 +12,10 @@ console.log('TWITTER_CLIENT_SECRET:', process.env.TWITTER_CLIENT_SECRET);
 const app=express();
 mongoose.connect(process.env.MONGO_URL).then(()=>console.log("Connected to MongoDB")).catch((err)=>console.log("Connection Fail",err));
 app.use(cors({
-    origin:"https://taisr-frontend.vercel.app",
-    credentials:true
+    origin:process.env.FRONTEND_URL,
+    credentials:true,
+    methods:['GET','POST','PUT','DELETE','OPTIONS'],
+    allowedHeaders:['Content-Type','Authorization']
 }));
 app.use(express.json());
 
@@ -26,8 +28,10 @@ app.use(session({
       secure: process.env.NODE_ENV === 'production',
       sameSite:'none',
       httpOnly:true,
-      maxAge: 1000 * 60 * 60 * 24 // 24 hours
-    }
+      maxAge: 1000 * 60 * 60 * 24, // 24 hours
+      domain: '.onrender.com'
+    },
+    proxy: true
 }));
 const authRoutes=require('./routes/authRoutes');
 const tweetRoutes=require('./routes/tweetRoutes');
