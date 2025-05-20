@@ -21,15 +21,25 @@ export const initiateTwitterAuth = async () => {
 export const getUserTwitterInfo = async () => {
   try {
     const response = await fetch(`${config.API.BASE_URL}${config.API.ENDPOINTS.TWITTER_USER}`, {
-      credentials: 'include'
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     });
     
     if (!response.ok) {
       if (response.status === 401) {
         return null; // Not authenticated
       }
-      const error = await response.json();
-      throw new Error(error.message || 'Failed to get user info');
+      try {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to get user info');
+      } catch (jsonError) {
+        // If response is not JSON, throw generic error
+        throw new Error('Authentication failed. Please try again.');
+      }
     }
     
     return await response.json();

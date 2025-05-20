@@ -12,10 +12,13 @@ const useAuthStore = create((set) => ({
     set({ isLoading: true })
     try {
       const user = await twitter.getCurrentUser()
-      set({ user, isAuthenticated: !!user, isLoading: false })
+      set({ user, isAuthenticated: !!user, isLoading: false,error:null })
       return user
     } catch (error) {
-      set({ error: error.message, isLoading: false })
+      set({ user: null, 
+        isAuthenticated: false, 
+        error: "Please login again", 
+        isLoading: false })
       return null
     }
   },

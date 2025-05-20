@@ -29,6 +29,7 @@ function Dashboard() {
     const checkAuthentication = async () => {
       const user = await checkAuth();
       if (!user) {
+        useAuthStore.getState().logout();
         navigate('/');
       } else {
         fetchTweetHistory();
