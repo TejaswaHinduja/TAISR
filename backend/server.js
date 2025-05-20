@@ -10,7 +10,7 @@ console.log("MONGO_URL is:", process.env.MONGO_URL);
 console.log('TWITTER_CLIENT_ID:', process.env.TWITTER_CLIENT_ID);
 console.log('TWITTER_CLIENT_SECRET:', process.env.TWITTER_CLIENT_SECRET);
 const app=express();
-mongoose.connect(process.env.MONGO_URL).then(()=>console.log("Connected to MongoDB")).catch((err)=>console.log("Connection Fail",err));
+mongoose.connect(process.env.MONGO_URL+'taisr').then(()=>console.log("Connected to MongoDB")).catch((err)=>console.log("Connection Fail",err));
 app.use(cors({
     origin:process.env.FRONTEND_URL,
     credentials:true,
@@ -23,12 +23,13 @@ app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({  mongoUrl: process.env.MONGO_URL }),
+    store: MongoStore.create({  mongoUrl: process.env.MONGO_URL+'taisr',collectionName:'sessions' }),
     cookie: { 
       secure: true,
       sameSite:'none',
       httpOnly:true,
-      maxAge: 1000 * 60 * 60 * 24, // 24 hours
+      maxAge: 1000 * 60 * 60 * 24,
+      domain:'.onrender.com' // 24 hours
       
     },
     proxy: true
