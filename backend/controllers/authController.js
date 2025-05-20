@@ -41,6 +41,7 @@ exports.twitterAuth = async(req, res) => {
         res.redirect(authLink.url);
     } catch (error) {
         console.log("Twitter auth fail", error);
+        
         res.status(500).json({error: "Twitter authentication failed"});
     }
 };

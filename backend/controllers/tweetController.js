@@ -19,7 +19,7 @@ exports.enhanceTweet = async (req, res) => {
     }
 };
 
-exports.postTweet=async(req,res)=>{
+exports.postTweet = async(req, res) => {
     try {
         if(!req.session.userId){
             return res.status(401).json({message:'Unauthorized'});
@@ -28,31 +28,36 @@ exports.postTweet=async(req,res)=>{
         if(!content){
             return res.status(400).json({message:'Tweet content is required'});
         }
-        const user=await User.findById(req.session.userId);
+        const user = await User.findById(req.session.userId);
         if(!user){
             return res.status(404).json({message:'User not found'});
         }
-        const twitterClient=new TwitterApi(
+        const twitterClient = new TwitterApi(
             user.twitterAccessToken,
         )
 
-        const tweet=await twitterClient.v2.tweet(content);
-        const newTweet=new Tweet({
-            userId:user._id,
-            tweetId:tweet.data.id,
+        const tweet = await twitterClient.v2.tweet(content);
+        const newTweet = new Tweet({
+            userId: user._id,
+            tweetId: tweet.data.id,
             content,
-            createdAt:new Date(),
+            createdAt: new Date(),
         })
         await newTweet.save();
         res.json({
             success: true,
             tweetId: tweet.data.id,
             tweetUrl: `https://twitter.com/${user.username}/status/${tweet.data.id}`
-          });
+        });
 
     } catch (error) {
-        console.log("Post failed",error);
-        
+        console.log("Post failed", error);
+        // Add proper error response
+        res.status(500).json({
+            success: false,
+            message: 'Failed to post tweet',
+            error: error.message
+        });
     }
 }
 exports.getTweetHistory = async (req, res) => {
