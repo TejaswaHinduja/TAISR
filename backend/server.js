@@ -21,16 +21,18 @@ app.use(express.json());
 
 app.use(session({
     secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({  mongoUrl: process.env.MONGO_URL+'taisr',collectionName:'sessions' }),
+    resave: true,           // Changed to true
+    saveUninitialized: false, // Changed to false
+    store: MongoStore.create({ 
+        mongoUrl: process.env.MONGO_URL,
+        ttl: 24 * 60 * 60, // 1 day
+        autoRemove: 'native'
+    }),
     cookie: { 
-      secure: true,
-      sameSite:'none',
-      httpOnly:true,
-      maxAge: 1000 * 60 * 60 * 24,
-      domain:'.onrender.com' // 24 hours
-      
+        secure: true,
+        sameSite: 'none',
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 // 24 hours
     },
     proxy: true
 }));

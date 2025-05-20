@@ -27,14 +27,18 @@ exports.twitterAuth = async(req, res) => {
         req.session.stateTimestamp = timestamp;
         
         // Save session explicitly before redirecting
-        req.session.save((err) => {
-            if (err) {
-                console.error("Session save error:", err);
-                return res.status(500).json({error: "Failed to save session"});
-            }
-            console.log("Session saved, redirecting to Twitter");
-            res.redirect(authLink.url);
+        await new Promise((resolve, reject) => {
+            req.session.save((err) => {
+                if (err) {
+                    console.error("Session save error:", err);
+                    reject(err);
+                    return;
+                }
+                console.log("Session saved successfully");
+                resolve();
+            });
         });
+        res.redirect(authLink.url);
     } catch (error) {
         console.log("Twitter auth fail", error);
         res.status(500).json({error: "Twitter authentication failed"});
