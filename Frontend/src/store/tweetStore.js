@@ -56,22 +56,7 @@ const useTweetStore = create((set, get) => ({
   
   // Fetch tweet history
   fetchTweetHistory: async () => {
-    try {
-      const response = await fetch('/api/tweets/history', {
-        credentials: 'include'
-      })
-      const data = await response.json()
-      if (response.ok) {
-        set({ tweetHistory: data })
-        return data
-      } else {
-        set({ error: data.error })
-        return []
-      }
-    } catch (error) {
-      set({ error: error.message })
-      return []
-    }
+    
   },
   
   // Clear any errors

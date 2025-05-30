@@ -21,8 +21,8 @@ app.use(express.json());
 
 app.use(session({
     secret: 'your-secret-key',
-    resave: true,           // Changed to true
-    saveUninitialized: false, // Changed to false
+    resave: true,           
+    saveUninitialized: false, 
     store: MongoStore.create({ 
         mongoUrl: process.env.MONGO_URL,
         ttl: 24 * 60 * 60, // 1 day
