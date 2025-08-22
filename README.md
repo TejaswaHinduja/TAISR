@@ -14,7 +14,9 @@
 
 ## 🛠️ Tech Stack
 - React
-- Node.js 
+- Express
+- Node.js
+- MongoDB
 - MISTRAL API
 - Twitter API v2
 - dotenv for managing environment variables
