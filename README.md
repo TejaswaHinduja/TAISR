@@ -13,11 +13,11 @@
 ---
 
 ## 🛠️ Tech Stack
-
-- **Node.js 
-- **MISTRAL API*
-- **Twitter API v2**
-- **dotenv** for managing environment variables
+- React
+- Node.js 
+- MISTRAL API
+- Twitter API v2
+- dotenv for managing environment variables
 
 ---
 
